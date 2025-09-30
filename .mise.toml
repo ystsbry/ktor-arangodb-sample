@@ -1,0 +1,4 @@
+[tools]
+java = "temurin-21.0.8+9"
+kotlin = "2.2.20"
+gradle = "9.1.0"
