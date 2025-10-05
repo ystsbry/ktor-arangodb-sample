@@ -1,17 +1,21 @@
 package ArangoDB
 
+import com.typesafe.config.ConfigFactory
 import com.arangodb.ArangoDB
-import com.arangodb.ContentType
-import com.arangodb.serde.jackson.JacksonSerde
 
 object ArangoClient {
 
-    val client: ArangoDB by lazy {
-        val host = System.getenv("ARANGO_HOST") ?: "127.0.0.1"
-        val port = (System.getenv("ARANGO_PORT") ?: "8529").toInt()
-        val user = System.getenv("ARANGO_USER") ?: "root"
-        val pass = System.getenv("ARANGO_PASSWORD") ?: ""
+    private val cfg = ConfigFactory.load().getConfig("arango")
 
+    private val host = cfg.getString("host")
+    private val port = cfg.getInt("port")
+    private val user = cfg.getString("user")
+    private val pass = cfg.getString("password")
+    
+    @PublishedApi
+    internal val defaultDb: String = cfg.getString("db")
+
+    val client: ArangoDB by lazy {
         ArangoDB.Builder()
             .host(host, port)
             .user(user)
@@ -23,7 +27,7 @@ object ArangoClient {
     }
 
     fun database(
-        name: String = System.getenv("ARANGO_DB") ?: "test",
+        name: String = defaultDb,
         createIfMissing: Boolean = true
     ) = client.db(name).also { db ->
         if (createIfMissing && !db.exists()) {
@@ -32,7 +36,7 @@ object ArangoClient {
     }
 
     inline fun <T> withDb(
-        name: String = System.getenv("ARANGO_DB") ?: "test",
+        name: String = defaultDb,
         block: (com.arangodb.ArangoDatabase) -> T
     ): T = block(database(name))
 }
