@@ -24,3 +24,12 @@ dependencies {
 
     implementation("com.arangodb:arangodb-java-driver:7.22.0")
 }
+
+tasks.register<JavaExec>("runDev") {
+    group = "application"
+    description = "Run Ktor in development mode"
+    dependsOn("classes")
+    mainClass.set(application.mainClass)
+    classpath = sourceSets["main"].runtimeClasspath
+    jvmArgs("-Dio.ktor.development=true")
+}
