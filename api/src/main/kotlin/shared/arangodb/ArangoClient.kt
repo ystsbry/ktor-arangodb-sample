@@ -1,4 +1,4 @@
-package ArangoDB
+package shared.arangodb
 
 import com.typesafe.config.ConfigFactory
 import com.arangodb.ArangoDB
