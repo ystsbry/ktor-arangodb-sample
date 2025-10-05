@@ -1,22 +1,22 @@
 ktor:
-    application:
-        modules:
-            - com.example.com.ApplicationKt.module
-    deployment:
-        port: 8080
+  application:
+    modules:
+      - com.example.com.ApplicationKt.module
+  deployment:
+    port: 8080
 
-    arango:
-        host: "127.0.0.1"
-        host: ${?ARANGO_HOST}
+  arango:
+    host: "127.0.0.1"
+    host: ${?ARANGO_HOST}
 
-        port: 8529
-        port: ${?ARANGO_PORT}
+    port: 8529
+    port: ${?ARANGO_PORT}
 
-        user: "root"
-        user: ${?ARANGO_USER}
+    user: "root"
+    user: ${?ARANGO_USER}
 
-        password: "password"
-        password: ${?ARANGO_PASSWORD}
+    password: "password"
+    password: ${?ARANGO_PASSWORD}
 
-        db: "tutorial"
-        db: ${?ARANGO_DB}
+    db: "tutorial"
+    db: ${?ARANGO_DB}
