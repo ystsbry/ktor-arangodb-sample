@@ -1,0 +1,65 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "My API",
+    "version" : "1.0.0"
+  },
+  "externalDocs" : {
+    "url" : "/"
+  },
+  "servers" : [ ],
+  "tags" : [ ],
+  "paths" : {
+    "/swagger/documentation.yaml" : {
+      "get" : {
+        "tags" : [ ],
+        "parameters" : [ ],
+        "responses" : { },
+        "deprecated" : false
+      }
+    },
+    "/swagger" : {
+      "get" : {
+        "tags" : [ ],
+        "parameters" : [ ],
+        "responses" : { },
+        "deprecated" : false
+      }
+    },
+    "" : {
+      "get" : {
+        "tags" : [ ],
+        "parameters" : [ ],
+        "responses" : { },
+        "deprecated" : false
+      }
+    },
+    "/hello2" : {
+      "get" : {
+        "tags" : [ ],
+        "description" : "Hello world sample",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "plain text",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "title" : "String"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "components" : {
+    "schemas" : { },
+    "examples" : { }
+  },
+  "webhooks" : { }
+}

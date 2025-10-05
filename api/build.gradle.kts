@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 val kotlin_version: String by project
 val logback_version: String by project
 
@@ -13,7 +15,11 @@ application {
     mainClass = "io.ktor.server.netty.EngineMain"
 }
 
+val openApiToolsVersion = "5.3.0"
+
 dependencies {
+    implementation("io.github.smiley4:ktor-openapi:$openApiToolsVersion")
+    implementation("io.github.smiley4:ktor-swagger-ui:$openApiToolsVersion")
     implementation("io.ktor:ktor-server-swagger")
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
@@ -25,6 +31,19 @@ dependencies {
     implementation("com.arangodb:arangodb-java-driver:7.22.0")
 }
 
+kotlin {
+    jvmToolchain(21)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 tasks.register<JavaExec>("runDev") {
     group = "application"
     description = "Run Ktor in development mode"
@@ -32,4 +51,11 @@ tasks.register<JavaExec>("runDev") {
     mainClass.set(application.mainClass)
     classpath = sourceSets["main"].runtimeClasspath
     jvmArgs("-Dio.ktor.development=true")
+}
+
+tasks.register<JavaExec>("exportOpenApi") {
+    group = "documentation"
+    description = "Generate OpenAPI JSON from current Ktor routes"
+    mainClass.set("com.example.com.OpenApiExportKt") // 上で作ったファイル名に合わせる
+    classpath = sourceSets["main"].runtimeClasspath
 }
