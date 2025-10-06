@@ -1,11 +1,11 @@
-package chapter.hello
+package sample.hello
 
 import io.github.smiley4.ktoropenapi.get
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import chapter.hello.HelloService
+import sample.hello.HelloService
 
 fun Route.HelloRoutes() {
     route("hello") { 

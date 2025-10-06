@@ -6,29 +6,16 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.swagger.*
 import io.ktor.server.routing.*
-import chapter.hello2Message
-import chapter.hello.HelloRoutes
+import sample.hello.HelloRoutes
 
 fun Application.configureRouting() {
     routing {
-        route("chapter") { 
+        route("sample") { 
             HelloRoutes()
         }
 
         get("/") {
             call.respondText("Hello World!")
-        }
-
-        get("hello2", {
-            description = "Hello world sample"
-            response {
-                HttpStatusCode.OK to {
-                    description = "plain text"
-                    body<String>()
-                }
-            }
-        }) {
-            call.respondText(hello2Message())
         }
     }
 }
