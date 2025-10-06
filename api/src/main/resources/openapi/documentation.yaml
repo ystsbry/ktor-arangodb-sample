@@ -1,23 +1,89 @@
-openapi: "3.0.3"
+openapi: 3.1.0
 info:
-  title: "Application API"
-  description: "Application API"
-  version: "1.0.0"
-servers:
-  - url: "http://0.0.0.0:8080"
+  title: My API
+  version: 1.0.0
+externalDocs:
+  url: /
+servers: []
+tags: []
 paths:
-  /:
+  /swagger/documentation.yaml:
     get:
-      description: "Hello World!"
+      tags: []
+      parameters: []
+      responses: {}
+      deprecated: false
+  /swagger:
+    get:
+      tags: []
+      parameters: []
+      responses: {}
+      deprecated: false
+  /sample/hello:
+    get:
+      tags: []
+      description: Hello world sample
+      parameters: []
       responses:
         "200":
-          description: "OK"
+          headers: {}
           content:
-            text/plain:
+            application/json:
               schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
+                type: string
+                title: String
+      deprecated: false
+  /sample/echo:
+    post:
+      tags: []
+      description: メッセージをエコーする
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/sample.echo.EchoReq"
+        required: true
+      responses:
+        "200":
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/sample.echo.EchoRes"
+        "400":
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: string
+                title: String
+      deprecated: false
+  ? ""
+  : get:
+      tags: []
+      parameters: []
+      responses: {}
+      deprecated: false
 components:
-  schemas: {}
+  schemas:
+    sample.echo.EchoReq:
+      type: object
+      properties:
+        msg:
+          type: string
+          title: String
+      required:
+      - msg
+      title: EchoReq
+    sample.echo.EchoRes:
+      type: object
+      properties:
+        echoed:
+          type: string
+          title: String
+      required:
+      - echoed
+      title: EchoRes
+  examples: {}
+webhooks: {}
