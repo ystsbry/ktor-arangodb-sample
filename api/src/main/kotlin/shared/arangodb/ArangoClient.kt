@@ -1,42 +1,39 @@
 package shared.arangodb
 
-import com.typesafe.config.ConfigFactory
 import com.arangodb.ArangoDB
+import com.arangodb.ArangoDatabase
+import io.ktor.server.application.*
+import io.ktor.server.config.ApplicationConfig
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.Closeable
 
-object ArangoClient {
+object ArangoClient : Closeable {
+    @Volatile private var driver: ArangoDB? = null
+    @Volatile lateinit var db: ArangoDatabase
+        private set
 
-    private val cfg = ConfigFactory.load().getConfig("arango")
+    fun init(config: ApplicationConfig) {
+        if (driver != null) return
 
-    private val host = cfg.getString("host")
-    private val port = cfg.getInt("port")
-    private val user = cfg.getString("user")
-    private val pass = cfg.getString("password")
-    
-    @PublishedApi
-    internal val defaultDb: String = cfg.getString("db")
+        val host = config.property("arango.host").getString()
+        val port = config.property("arango.port").getString().toInt()
+        val user = config.property("arango.user").getString()
+        val pass = config.property("arango.password").getString()
+        val dbName = config.property("arango.db").getString()
 
-    val client: ArangoDB by lazy {
-        ArangoDB.Builder()
+        val d = ArangoDB.Builder()
             .host(host, port)
             .user(user)
             .password(pass)
             .build()
-            .also { c ->
-                Runtime.getRuntime().addShutdownHook(Thread { c.shutdown() })
-            }
+
+        driver = d
+        db = d.db(dbName)
     }
 
-    fun database(
-        name: String = defaultDb,
-        createIfMissing: Boolean = true
-    ) = client.db(name).also { db ->
-        if (createIfMissing && !db.exists()) {
-            client.createDatabase(name)
-        }
+    override fun close() {
+        driver?.shutdown()
+        driver = null
     }
-
-    inline fun <T> withDb(
-        name: String = defaultDb,
-        block: (com.arangodb.ArangoDatabase) -> T
-    ): T = block(database(name))
 }
