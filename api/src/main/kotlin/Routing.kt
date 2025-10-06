@@ -5,8 +5,8 @@ import io.ktor.server.response.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.swagger.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import chapter.hello2Message
 
 fun Application.configureRouting() {
     routing {
@@ -23,7 +23,7 @@ fun Application.configureRouting() {
                 }
             }
         }) {
-            call.respondText("hello world2!!")
+            call.respondText(hello2Message())
         }
     }
 }
