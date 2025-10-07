@@ -59,6 +59,34 @@ paths:
                 type: string
                 title: String
       deprecated: false
+  /chapter/aql-crud-part1:
+    post:
+      tags: []
+      parameters: []
+      responses: {}
+      deprecated: false
+  /common/collection:
+    post:
+      tags: []
+      parameters:
+      - name: name
+        in: query
+        description: コレクション名
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          type: string
+          title: String
+      responses:
+        "200":
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: string
+                title: String
+      deprecated: false
   ? ""
   : get:
       tags: []

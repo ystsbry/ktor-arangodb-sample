@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.config.OutputFormat
 import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
+import io.ktor.server.resources.Resources
 import io.github.smiley4.ktoropenapi.OpenApiPlugin
 import kotlinx.serialization.json.Json
 import shared.arangodb.ArangoClient
@@ -17,6 +18,8 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    install(Resources)
+
     install(ContentNegotiation) {
         json(
             Json {
@@ -30,6 +33,7 @@ fun Application.module() {
     install(OpenApi) {
         info { title = "My API"; version = "1.0.0" }
         outputFormat = OutputFormat.YAML
+        autoDocumentResourcesRoutes = true
     }
 
     monitor.subscribe(ApplicationStarted) {
