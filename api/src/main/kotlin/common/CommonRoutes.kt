@@ -9,25 +9,29 @@ import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 import io.ktor.resources.Resource
 
-
 @Serializable
-@Resource("collection")
-data class Collection(val name: String)
+@Resource("common")
+class Common {
+    @Serializable
+    @Resource("collection")
+    data class Collection(
+        val parent: Common = Common(),    
+        val name: String
+    )
+}
 
 fun Route.commonRoutes() {
-    route("common") {
-        post<Collection>({
-            request {
-                queryParameter<String>("name") {
-                    description = "コレクション名"
-                    required = true
-                }
+    post<Common.Collection>({
+        request {
+            queryParameter<String>("name") {
+                description = "connection name"
+                required = true
             }
-            response {
-                HttpStatusCode.OK to { body<String>() }
-            }
-        }) { req ->
-            call.respond(HttpStatusCode.OK, "Collection: ${req.name}")
         }
+        response {
+            HttpStatusCode.OK to { body<String>() }
+        }
+    }) { req ->
+        call.respond(HttpStatusCode.OK, "Collection: ${req.name}")
     }
 }
