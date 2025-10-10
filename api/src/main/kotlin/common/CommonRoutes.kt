@@ -32,6 +32,7 @@ fun Route.commonRoutes() {
             HttpStatusCode.OK to { body<String>() }
         }
     }) { req ->
+        CommonService.createCollectionIfAbsent(req.name)
         call.respond(HttpStatusCode.OK, "Collection: ${req.name}")
     }
 }

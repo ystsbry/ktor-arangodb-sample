@@ -11,6 +11,6 @@ import kotlinx.serialization.Serializable
 
 fun Route.aqlCrudPart1Routes() {
     route("aql-crud-part1") {
-
+        post("") {}
     }
 }

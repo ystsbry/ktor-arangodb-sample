@@ -71,7 +71,7 @@ paths:
       parameters:
       - name: name
         in: query
-        description: コレクション名
+        description: connection name
         required: true
         deprecated: false
         explode: false
