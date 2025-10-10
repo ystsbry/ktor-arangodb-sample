@@ -8,6 +8,8 @@ import io.ktor.server.plugins.swagger.*
 import io.ktor.server.routing.*
 import sample.hello.HelloRoutes
 import sample.echo.EchoRoutes
+import chapter.aqlcrudpart1.aqlCrudPart1Routes
+import common.commonRoutes
 
 fun Application.configureRouting() {
     routing {
@@ -15,6 +17,12 @@ fun Application.configureRouting() {
             HelloRoutes()
             EchoRoutes()
         }
+
+        route("chapter") {
+            aqlCrudPart1Routes()
+        }
+
+        commonRoutes()
 
         get("/") {
             call.respondText("Hello World!")
