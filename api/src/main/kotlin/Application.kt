@@ -7,11 +7,12 @@ import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
 import io.ktor.server.resources.Resources
 import io.github.smiley4.ktoropenapi.OpenApiPlugin
 import kotlinx.serialization.json.Json
-import shared.arangodb.ArangoClient
 import io.ktor.server.application.ApplicationStopping
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json 
 import java.io.File
+import shared.arangodb.ArangoClient
+import shared.error.configureErrorMapper
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -51,4 +52,5 @@ fun Application.module() {
 
     configureHTTP()
     configureRouting()
+    configureErrorMapper()
 }

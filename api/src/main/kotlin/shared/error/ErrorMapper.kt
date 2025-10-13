@@ -20,11 +20,11 @@ fun Application.configureErrorMapper() {
             call.respond(code.httpStatus, response)
         }
 
-        exception<Throwable> { call, e ->
+        exception<Throwable> { call, _ ->
             val response = ProblemDetail(
                 title = "Internal Server Error",
                 status = HttpStatusCode.InternalServerError.value,
-                detail = e.message,
+                detail = "An unexpected error occurred",
                 code = ErrorCode.INTERNAL_ERROR.name
             )
 
