@@ -13,6 +13,7 @@ object CommonService {
             }
 
             ArangoClient.db.createCollection(name)
+            
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
