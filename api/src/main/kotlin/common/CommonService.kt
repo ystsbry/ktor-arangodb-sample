@@ -7,16 +7,10 @@ import shared.error.ConflictException
 
 object CommonService {
     suspend fun createCollectionIfAbsent(name: String) = withContext(Dispatchers.IO) {
-        try {
-            if (ArangoClient.db.collection(name).exists()) {
-                throw ConflictException("This collection with the name already exists in ArangoDB (collection name: $name)")
-            }
-
-            ArangoClient.db.createCollection(name)
-            
-        } catch (e: Exception) {
-            e.printStackTrace()
-            throw e
+        if (ArangoClient.db.collection(name).exists()) {
+            throw ConflictException("This collection with the name already exists in ArangoDB (collection name: $name)")
         }
+
+        ArangoClient.db.createCollection(name)
     }
 }
